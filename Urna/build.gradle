@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.gretty' version '2.2.0'
+}
+
+dependencies{
+    //Servlet
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+    compile 'javax.servlet:jstl:1.2'
+
+    //Hibernate
+    compile 'org.hibernate:hibernate-core:5.4.3.Final'
+    
+    //MariaDB client driver
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.2.0'    
+}
+
+// Compatibilidade da fonte da versão do JDK
+sourceCompatibility = 1.8
+
+// Versão do Projeto
+// version = '1.0'
+
+// Nome do arquivo war
+war.baseName = 'urna'
+
+// Definindo o diretório source do java
+sourceSets {
+        main {
+            java {
+                srcDir 'src'
+            }
+        }
+    }
+
+// Definindo o tomcat a ser usado no gretty
+gretty {
+  servletContainer = 'tomcat8'
+}
+
+// Repositórios
+repositories {
+   jcenter()
+}

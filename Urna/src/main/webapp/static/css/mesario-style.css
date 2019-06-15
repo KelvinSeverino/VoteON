@@ -1,0 +1,41 @@
+/*======================================================
+MESARIO
+========================================================*/
+.btn-pesquisar{
+    border-radius: 150px;
+    margin-bottom: 3%;
+}
+
+#hablitacao {
+    border-collapse: collapse;
+    width: 85%;
+    margin: auto;
+}
+
+#hablitacao td, #hablitacao th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#hablitacao tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+#hablitacao tr:hover {
+    background-color: #ddd;
+}
+
+#hablitacao th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgb(107, 107, 116);
+    color: white;
+}
+
+body{
+    text-align: center !important;
+}
+/*======================================================
+FIM MESARIO
+========================================================*/

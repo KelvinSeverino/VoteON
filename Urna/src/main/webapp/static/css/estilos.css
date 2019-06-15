@@ -1,0 +1,39 @@
+/* Estilos aplicados aos documentos html*/
+
+.baseForm{    
+    text-align: center;
+    width: 50%; 
+    margin: auto;
+}
+
+.formInput{
+    display: block;
+    margin: auto;
+    width:100%;
+    box-sizing: border-box;
+}
+
+.submitButton{
+    background-color:#3333FF;
+    color:#FFFFFF;
+    height: 2em;
+    border:none;  
+    border-radius: 4px; /*2% / 20%; /* larg / altura */
+}
+
+
+
+/* Efeitos pela combinação de classes com pseudoclasses: */
+input.formTextInput:focus{
+    background-color:#FFFFCC;
+    border-color: #000000;
+    border-style: solid;
+}
+
+p.warning{
+    align: center;
+    text-align:center;
+    margin:auto;
+    color:#FF0000;
+}
+

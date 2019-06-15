@@ -1,0 +1,95 @@
+/*======================================================
+LOGIN
+========================================================*/
+@import url('https://fonts.googleapis.com/css?family=Arvo');
+
+@font-face {
+    font-family: RobotoBold;
+    src: url("fonts/RobotoCondensed-Bold.ttf");
+}
+
+.container{
+    width: 100%;
+    height: 40vw;
+    background: red;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.box p{
+    text-align: center;
+}
+
+body{
+    margin: 0px;
+}
+
+body h2{
+    text-align: center;
+    font-family: 'Arvo';
+}
+
+.btn_confirma{
+    text-align: center;
+}
+
+/* Em telas com 600px ou menos, o menu se ajusta ao tamanho da tela */
+@media only screen and (max-width: 600px){
+    .container {
+        width: 100%;
+        height: 75vw;
+        background: gainsboro;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-confirma{
+        width: 100px;
+        height: 50px;
+    }
+
+    .btn-confirma:hover{
+        transition: 1s;
+        background-color: rgb(255, 251, 0) !important;
+    }
+
+    .form-group{
+        width: 100%;
+        height: 50%;
+        font-size: 17px;
+        text-align: center; 
+    }
+
+    .form-input{
+        border-radius: 150px;
+    }
+
+    .txt-login{
+        color: white;
+        text-align: left; 
+    }
+
+    .box p{
+        text-align: center;
+    }
+    
+    body{
+        margin: 0px;
+    }
+    
+    body h2{
+        font-family: 'RobotoBold';
+        font-size: 35px;
+        text-align: center;
+    }     
+}
+/*======================================================
+FIM LOGIN
+========================================================*/
+
+
+

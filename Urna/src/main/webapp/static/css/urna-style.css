@@ -1,0 +1,68 @@
+/*======================================================
+URNA
+========================================================*/
+.btn-voto .btn-branco {
+    background-color: rgb(255, 255, 255); /* Cor de fundo */
+    border: 1px solid rgb(216, 216, 216); /* Cor da borda */
+    color: black; /* Cor do texto */
+    padding: 10px 24px; /* Tamanho */
+    cursor: pointer; /* Mostrar cursor quando selecionado */
+    float: center; /* Deixar botão lado a lado */
+} 
+
+.btn-voto .btn-corrige {
+    background-color: rgb(212, 134, 31); 
+    border: 1px solid rgb(253, 143, 0); 
+    color: black; 
+    padding: 10px 24px; 
+    cursor: pointer; 
+    float: center; 
+}
+
+.btn-voto .btn-confirma {
+    background-color: #4CAF50; 
+    border: 1px solid green; 
+    color: black; 
+    padding: 10px 24px; 
+    cursor: pointer; 
+    float: center;     
+}
+  
+/* Clear floats (clearfix hack) */
+.btn-voto:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+  
+/* Add a background color on hover */
+.btn-voto .btn-branco:hover {
+    background-color: rgb(216, 216, 216);
+}
+
+.btn-voto .btn-corrige:hover {
+    background-color: rgb(253, 143, 0);
+}
+
+.btn-voto .btn-confirma:hover {
+    background-color: green;
+}
+
+.urna{
+    align-items: center;
+}
+
+.info-candidato{
+    margin-bottom: 10px;
+}
+
+.input-text{
+    margin-bottom: 10px;
+}
+
+body{
+    text-align: center;
+}
+/*======================================================
+FIM URNA
+========================================================*/
