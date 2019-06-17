@@ -6,14 +6,15 @@ plugins {
 
 dependencies{
     //Servlet
-    compile 'javax.servlet:javax.servlet-api:3.1.0'
-    compile 'javax.servlet:jstl:1.2'
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    providedCompile 'javax.servlet:jstl:1.2'
 
     //Hibernate
-    compile 'org.hibernate:hibernate-core:5.4.3.Final'
-    
+    providedCompile 'org.hibernate:hibernate-core:5.4.3.Final'
+    providedCompile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.2.Final' 
+
     //MariaDB client driver
-    implementation 'org.mariadb.jdbc:mariadb-java-client:2.2.0'    
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.2.0'   
 }
 
 // Compatibilidade da fonte da versão do JDK

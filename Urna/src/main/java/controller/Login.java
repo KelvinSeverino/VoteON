@@ -20,7 +20,7 @@ public class Login extends HttpServlet
         ServletContext sc = req.getServletContext();
         try
         {
-        sc.getRequestDispatcher("/dynamic/jsp/login.jsp").forward(req, resp);            
+            sc.getRequestDispatcher("/dynamic/jsp/login.jsp").forward(req, resp);            
         } 
         catch (Exception e)
         { 

@@ -1,53 +1,48 @@
-package controller;
+package Controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
+import model.Permissao;
 import model.Usuario;
 import service.UsuarioServiceImpl;
 
 @WebServlet ("/autenticador")
-public class Autenticador extends HttpServlet 
-{
+public class Autenticador extends HttpServlet {
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
-		try 
-        {
-			req.setCharacterEncoding("UTF-8"); 
-		} 
-        catch (Exception e) 
-        {
+    private static final long serialVersionUID = -8608687049026173883L;
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            req.setCharacterEncoding("UTF-8"); 
+        } catch (Exception e) {
         }
+        HttpSession sessao = req.getSession(true);
+        ServletContext sc = sessao.getServletContext();
 
-		ServletContext sc = req.getServletContext();
-		String login = (String) req.getParameter("nomeUsuario");
-		String senha = (String) req.getParameter("senha");
-		
-		UsuarioServiceImpl usuarioServ = new UsuarioServiceImpl();
-		Usuario usuario = usuarioServ.VerificaLogin(login, senha);
+        String login = req.getParameter("login");
+        String senha = req.getParameter("senha");
 
-		System.out.println(usuario.getNome());
+        UsuarioServiceImpl usuarioServ = new UsuarioServiceImpl();
+        Usuario usuario = usuarioServ.VerificaLogin(login, senha);
 
 		try 
-        {
-			req.setAttribute("nomeUsuario", usuario.getNome().toString());
-			req.setAttribute("nascimento", usuario.getNascimento().toString());
+		{
+            req.setAttribute("cpf", usuario.getCpf());
+            req.setAttribute("nomeUsuario", usuario.getNome());
+            req.setAttribute("sessao", sessao);
+            req.setAttribute("autorizacao", usuario.getFk_nivel().getNivel());
 
-			sc.getRequestDispatcher("/dynamic/jsp/home.jsp").forward(req, resp);
+            sc.getRequestDispatcher("/dynamic/jsp/redirecionador.jsp").forward(req, resp);
 		} 
-        catch (Exception e) 
-        {
-			req.setAttribute("falhaAutenticacao", true);
-			sc.getRequestDispatcher("/dynamic/jsp/login.jsp").forward(req, resp);
-		}
-	}
+		catch (Exception e) 
+		{
+            req.setAttribute("falhaAutenticacao", true);
+            sc.getRequestDispatcher("/dynamic/jsp/login.jsp").forward(req, resp);
+        }
+    }
 }

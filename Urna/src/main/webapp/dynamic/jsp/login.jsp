@@ -11,14 +11,14 @@
     </head>
     <body>
         <div>
-                <h2>VoteON</h2>
+            <h2>VoteON</h2>
         </div>
 
         <div class="container">
                 <form method="post" action="autenticador">
                     <div class="form-group txt-login">
                         <label>Título de Eleitor</label>
-                        <input type="text" class="form-control" id=nomeUsuario name="nomeUsuario" required>                  
+                        <input type="text" class="form-control" id=login name="login" required>                  
                     </div>
                     <div class="form-group txt-login">
                         <label>Senha</label>
@@ -27,12 +27,13 @@
                     <div class="btn_confirma">
                         <button type="submit" class="btn btn-primary btn-confirma" id="confirma" value="Autenticar">Entrar</button>
                     </div>
+                    <% 
+                        if ( request.getAttribute("falhaAutenticacao")!=null )
+                            out.print("<p class=\"warning\"> Usuário ou senha inválidos.</p>"); 
+                    %> 
                 </form>
-            </div>  
-        <% 
-            if ( request.getAttribute("falhaAutenticacao")!=null )
-                out.print("<p class=\"warning\"> Usuário ou senha inválidos.</p>"); 
-        %>  
+            </div> 
+         
         
         <%-- <c:forEach var="x" begin="1" end="3">
             <c:out value="${x}"> a </c:out>

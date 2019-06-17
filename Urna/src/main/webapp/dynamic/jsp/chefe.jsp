@@ -1,3 +1,10 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<% 
+    String contexto = request.getContextPath();
+    if (!contexto.equals(""))
+        contexto = contexto + "/";
+%>
 <!DOCTYPE html>
 <html>
   <head>        
@@ -10,7 +17,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         
         <title>VoteON - Chefe de Sessão Online</title>
+        <%
+            response.setContentType("text/html");
+            response.setCharacterEncoding("UTF-8");
+            HttpSession sessao = (HttpSession) request.getAttribute("sessao");
+        %>
     </head>
+
     <body>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -19,8 +32,8 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Relatório de Votos</a></li>
-                    <li><a href="urna.jsp">Votar</a></li>
-                    <li><a href="mesario.jsp">Habilitar Voto</a></li>
+                    <li><a href="dynamic/jsp/urna.jsp">Votar</a></li>
+                    <li><a href="dynamic/jsp/mesario.jsp">Habilitar Voto</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-out"></span>Sair</a></li>
@@ -37,10 +50,14 @@
                                     <p>Deseja realmente sair?</p>
                                 </div>
                                 <!--Botões-->
-                                <form action="./login.html">
+                                <form action="/Urna">
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
-                                        <button class="btn btn-success">Sim</button>
+                                        <button class= "btn btn-success"> 
+                                            <%
+                                                sessao.invalidate();
+                                            %> Sim
+                                        </button>
                                     </div>
                                 </form>
                             </div>                    
@@ -51,13 +68,12 @@
         </nav>
         Olá. logou como chefe de seção: 
         <%
-            response.setContentType("text/html");
-            response.setCharacterEncoding("UTF-8");
             String nomeUsuario = (String) request.getAttribute("nomeUsuario");
             String data = (String) request.getAttribute("nascimento");
 
             out.print("<p>" + nomeUsuario + "</p>");
             out.print("<p>" + data + "</p>");
+            out.print("<p>" + sessao.getId() + "</p>");
         %>
         <div class="container-relatorio">
             <div class="gerar-relatorio"> 
