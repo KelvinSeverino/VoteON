@@ -5,10 +5,12 @@
 <%
     HttpSession sessao = request.getSession();
     Usuario usuario = (Usuario) sessao.getAttribute("usuario"); 
+    Candidatos candidato = (Candidatos) sessao.getAttribute("candidato");
 
     if (sessao.getId().equals(null)) 
     {
-        sessao.getServletContext().getRequestDispatcher("/eleitor").forward(request, response);
+        sessao.getServletContext().getRequestDispatcher("/urna").forward(request, response);
+        return;
     }
 %>
 
@@ -28,7 +30,7 @@
             <a class="navbar-brand" href="#">Urna - Chefe De Sessão</a>    
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>            
+            </button>   
             <div class="collapse navbar-collapse" id="navbarSupportedContent">                    
                 <form action="eleitor" method="POST">    
                     <button type="submit" class="btn btn-outline-primary">Urna</button>    
@@ -67,44 +69,60 @@
                     </form>    
             </div>    
         </nav>
-        <div align="center"><p><br>Olá! Você está na tela de votação</br></p></div>
         
+        <div align="center"><p><br>Olá! Você está na tela de dados do Candidato Inserido</br></p></div>
+
         <div class="container">
             <div align="center">
-                <p>Insira o número do candidato e aperte ENTER</p>
                 <div class="urna">
                     <div class="info-candidato">
-                        <% if (usuario.isHabilitado() == true)
-                        {%>
-                        <% if (usuario.isVotado() == false) 
-                        {
-                        %>
-                        <form action="votacao" method="GET">             
-                            
-                            <div class="input-text">
-                                <input type="text" id="num-candidato" name="numcandidato" required maxlength="2" [0-]>
-                            </div>
-                            <% 
-                                if ( sessao.getAttribute("erro") != null )
-                                    out.print("<p> Esse candidato não existe.</p>");
-                                    sessao.setAttribute("erro",null); 
-                            %>    
-                            
-                        </form>
-                        <div class="btn-voto">
-                                <button type="submit" class="btn-branco" disabled>Retornar</button>
-                                <button type="submit" class="btn-confirma" disabled>Confirma</button>
+                    <% if (usuario.isVotado() == false) 
+                    {
+                    %>
+                    <div class="imagem">
+                        <img src="<%= candidato.getLink()%>" width="200" height="150" alt="Candidato X">
+                    </div>
+                    <form action="registraVoto" method="POST">                    
+                        <div class="nome-candidato">
+                            <h5>Candidato: <%= candidato.getNome()%></h5>
+                        </div>
+                        <div class="num-candidato">
+                            <h5>Num: <%= candidato.getNumero()%></h5>
+                        </div>
+                        <div class="partido">
+                            <h5>Partido: <%= candidato.getPartido()%></h5>
+                        </div>            
+                                
+                        <div class="input-text">
+                            <input value="<%= candidato.getNumero()%>" type="text" id="num-candidato" name="numcandidato" required maxlength="2" [0-]>
                         </div>
                         <% 
-                        } 
-                        else 
-                        {
-                            out.print("<p> Não é permitido votar mais de uma vez! </p>"); 
-                        }
+                            if ( sessao.getAttribute("erro") != null )
+                                out.print("<p> Esse candidato não existe.</p>"); 
+                        %>                           
+                        
+                        <div class="btn-voto">                        
+                            <button type="submit" class="btn-confirma">Confirma</button>
+                        </div> 
+                        <% 
+                            if (sessao.getAttribute("erroVotacao") != null) 
+                            {
+                                out.print("<p> ERROR... Aconteceu alguma coisa no processamento do seu voto, tente novamente. </p>"); 
+                            }
                         %>
-                        <%}else{
-                            out.print("<p>Você nao pode votar, habilite.</p>");
-                        }%>
+                    </form>
+                    <% 
+                    } 
+                    else 
+                    {
+                        out.print("<p> Não é permitido votar mais de uma vez! </p>"); 
+                    }
+                    %>
+                    <form action="eleitor" method="POST">
+                        <div class="btn-voto">                        
+                            <button type="submit" class="btn-branco">Retornar</button>
+                        </div>                        
+                    </form>
                 </div>
             </div>
         </div>        

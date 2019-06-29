@@ -3,87 +3,88 @@ package model;
 import javax.persistence.*;
 import javax.persistence.Entity;
 
-/**
- * Candidatos
- */
 @Entity
 @Table(name="candidatos")
-public class Candidatos
+public class Candidatos 
 {
+
     @Column(name="nome")
     private String nome;
-    
+
     @Column(name="partido")
     private String partido;
-    
+
     @Column(name="votos")
     private int votos;
-    
-    @Id
+
     @Column(name="numero")
     private int numero;
 
-	/**
-	 * @return the nome
-	 */
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column (name="id")
+    private int id;
+
+    @Column(name="link")
+    private String link;
+    
 	public String getNome() 
 	{
-		return nome;
-	}
-
-	/**
-	 * @param nome the nome to set
-	 */
+        return nome;
+    }
+    
 	public void setNome(String nome) 
 	{
-		this.nome = nome;
-	}
+        this.nome = nome;
+    }
 
-	/**
-	 * @return the partido
-	 */
 	public String getPartido() 
 	{
-		return partido;
-	}
+        return partido;
+    }
 
-	/**
-	 * @param partido the partido to set
-	 */
 	public void setPartido(String partido) 
 	{
-		this.partido = partido;
-	}
+        this.partido = partido;
+    }
 
-	/**
-	 * @return the votos
-	 */
 	public int getVotos() 
 	{
-		return votos;
-	}
+        return votos;
+    }
 
-	/**
-	 * @param votos the votos to set
-	 */
 	public void setVotos(int votos) 
 	{
-		this.votos = votos;
-	}
+        this.votos = votos;
+    }
 
-	/**
-	 * @return the numero
-	 */
 	public int getNumero() 
 	{
-		return numero;
-	}
+        return numero;
+    }
 
-	/**
-	 * @param numero the numero to set
-	 */
 	public void setNumero(int numero) 
 	{
-		this.numero = numero;
-	}
+        this.numero = numero;
+    }
+
+	public int getId() 
+	{
+        return id;
+    }
+
+	public void setId(int id) 
+	{
+        this.id = id;
+    }
+
+    public String getLink() 
+	{
+        return link;
+    }
+
+	public void setLink(String link) 
+	{
+        this.link = link;
+    }
 }

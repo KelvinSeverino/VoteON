@@ -1,3 +1,22 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="model.*" %>
+<%@ page import="java.util.List" %>
+<%
+
+		HttpSession sessao = (HttpSession) request.getSession();
+		Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+		List<Usuario> usuariosAtivos = (List<Usuario>) request.getAttribute("usuariosAtivos");
+		List<Usuario> usuariosInativos = (List<Usuario>) request.getAttribute("usuariosInativos");
+
+		if (usuario != null) {
+			sessao.getServletContext().getRequestDispatcher("/UrnaOnline");
+		}
+
+		if (usuario.getFk_nivel().getNivel() != 3 && usuario.getFk_nivel().getNivel() != 2) {
+			sessao.getServletContext().getRequestDispatcher("urna").forward(request, response);
+		}
+%>
+
 <!doctype html>
 <html>
   <head>        
@@ -5,92 +24,118 @@
         <link rel="stylesheet" type="text/css" href="static/css/mesario-style.css">
         
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
         
-        <title>VoteON - Mesário Online</title>
-        <%
-            response.setContentType("text/html");
-            response.setCharacterEncoding("UTF-8");
-            HttpSession sessao = (HttpSession) request.getAttribute("sessao");
-        %>
+        <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+        <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+        <title>VoteON - Mesário</title>
     </head>
     <body>
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                <a class="navbar-brand" href="#">VoteON - Mesário Online</a>
-                </div>
-                <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="urna.html">Votar</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-out"></span>Sair</a></li>
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">                    
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Caixa de Diálogo</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Deseja realmente sair?</p>
-                                </div>
-                                <!--Botões-->
-                                <form action="/Urna">
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
-                                        <button class= "btn btn-success"> 
-                                            <%
-                                                sessao.invalidate();
-                                            %> Sim
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>                    
-                        </div>
-                    </div>   
-                </ul>
-            </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Urna - Chefe De Sessão</a>    
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>   
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">                    
+                <form action="eleitor" method="POST">    
+                    <button type="submit" class="btn btn-outline-primary">Urna</button>    
+                </form>    
+                <form action="mesario" method="POST">    
+                    <button type="submit" class="btn btn-outline-primary">Habilitar Voto</button>    
+                </form>
+                <%if (usuario.getFk_nivel().getNivel() == 3) 
+                {
+                %>
+                    <form action="chefesessao" method="POST">
+                        <button type="submit" class="btn btn-outline-primary">Relatório de Votação</button>
+                    </form>
+                <%
+                }
+                %>   
+                <ul class="navbar-nav mr-auto">    
+                </ul>    
+                    <form action="logout" method="POST">    
+                        <button type="submit" class="btn btn-outline-danger">Logout</button>    
+                    </form>    
+            </div>    
         </nav>
-                
-        <h2><p>Pesquise o Eleitor para Hablitar...</p></h2>
 
-        <div class="box">
-            <div class="barra-pesquisa">  
-                <input type="text" id="input-num-eleitor" placeholder="Título de Eleitor" required>
-                <button class="btn-pesquisar">Pesquisar</button>
-            </div>
-            <table id="hablitacao">
-                <tr>
-                    <th>Título de Eleitor</th>
-                    <th>Eleitor</th>
-                    <th>Habilitado</th>
-                    <th>Não Habilitado</th>
-                    <th>Zona</th>
-                    <th>Seção Eleitoal</th>                    
-                </tr>
-                <tr>
-                    <td>1234</td>
-                    <td>Jonny Cage</td>
-                    <td><input type="radio" name="1" value="true"></td>
-                    <td><input type="radio" name="1" value="false"></td>
-                    <td>02</td>
-                    <td>25</td>                    
-                </tr>
-                <tr>
-                    <td>4321</td>
-                    <td>Ricardo Milos</td>
-                    <td><input type="radio" name="2" value="true"></td>
-                    <td><input type="radio" name="2" value="false"></td>
-                    <td>02</td>
-                    <td>27</td>  
-                </tr>                    
-                </table>
-        </div>
+        <%if (usuario.getFk_nivel().getNivel() == 3) 
+        {
+        %>
+            <br>Olá! Você logou como chefe de seção:</br> 
+            <p>Chefe de Sessão: <%=usuario.getNome()%></p>
+            <p>Seção Eleitoral: <%=usuario.getFk_id_secao().getId_secao()%></p>
+            <p>Zona Eleitoral: <%=usuario.getFk_id_zona().getNome()%></p>
+        <%
+        }
+        %> 
+
+        <form action="AtivarVotante" method="GET">
+			<div class="input-group mb-3">
+				<input type="text" name="tituloUser" required>
+				<button class="btn btn-outline-success" type="Submit">Ativar Usuario</button>
+			</div>
+        </form>
+        
+        <%
+			if (!usuariosAtivos.isEmpty()) 
+			{
+		%>
+			<h3>Usuarios Habilitados</h3>
+				<table id="hablitacao">
+					<thead>
+						<tr>
+							<th>Usuario</th>
+							<th>Titulo</th>
+						</tr>
+					</thead>
+					<tbody>
+							<%
+								for (Usuario cUser : usuariosAtivos) 
+								{
+							%>
+								<tr>
+									<td><%= cUser.getNome() %></td>
+									<td><%= cUser.getTitulo() %></td>
+								</tr>
+							<%
+							}
+							%>
+					</tbody>
+			</table>
+		<% 
+			} 
+		%>
+		<%
+			if (!usuariosInativos.isEmpty()) 
+			{
+		%>
+			<h3>Usuarios NÃO Habilitados</h3>
+			<table id="hablitacao">
+					<thead>
+						<tr>
+							<th>Usuario</th>
+							<th>Titulo</th>
+						</tr>
+					</thead>
+					<tbody>
+							<%
+								for (Usuario cUserInativos : usuariosInativos) 
+								{
+							%>
+								<tr>
+									<td><%= cUserInativos.getNome() %></td>
+									<td><%= cUserInativos.getTitulo() %></td>
+								</tr>
+							<%
+								}
+							%>
+					</tbody>
+			</table>
+		<% 
+			} 
+		%>
     </body>
 </html>

@@ -1,6 +1,16 @@
 /*======================================================
 URNA
 ========================================================*/
+.container{
+    width: 50%;
+    height: 30vw;
+    background: gray;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .btn-voto .btn-branco {
     background-color: rgb(255, 255, 255); /* Cor de fundo */
     border: 1px solid rgb(216, 216, 216); /* Cor da borda */

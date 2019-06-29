@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import java.io.IOException;
 import javax.servlet.ServletContext;
@@ -11,18 +11,20 @@ import model.Usuario;
 import service.UsuarioServiceImpl;
 
 @WebServlet ("/autenticador")
-public class Autenticador extends HttpServlet {
-
+public class Autenticador extends HttpServlet 
+{
     private static final long serialVersionUID = -8608687049026173883L;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
+    {
+        try 
+        {
             req.setCharacterEncoding("UTF-8"); 
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
         }
-        HttpSession sessao = req.getSession(true);
-        ServletContext sc = sessao.getServletContext();
 
         String login = req.getParameter("login");
         String senha = req.getParameter("senha");
@@ -30,19 +32,30 @@ public class Autenticador extends HttpServlet {
         UsuarioServiceImpl usuarioServ = new UsuarioServiceImpl();
         Usuario usuario = usuarioServ.VerificaLogin(login, senha);
 
-		try 
-		{
-            req.setAttribute("cpf", usuario.getCpf());
-            req.setAttribute("nomeUsuario", usuario.getNome());
-            req.setAttribute("sessao", sessao);
-            req.setAttribute("autorizacao", usuario.getFk_nivel().getNivel());
 
-            sc.getRequestDispatcher("/dynamic/jsp/redirecionador.jsp").forward(req, resp);
-		} 
-		catch (Exception e) 
-		{
+        try 
+        {
+            HttpSession sessao = req.getSession();
+            sessao.setAttribute("usuario", usuario);
+
+            if (usuario.getFk_nivel().getNivel() == 1)
+            {
+                sessao.getServletContext().getRequestDispatcher("/eleitor").forward(req, resp);
+            }
+            else if (usuario.getFk_nivel().getNivel() == 2)
+            {
+                sessao.getServletContext().getRequestDispatcher("/mesario").forward(req, resp);
+            }
+            else if (usuario.getFk_nivel().getNivel() == 3 )
+            {
+                sessao.getServletContext().getRequestDispatcher("/chefesessao").forward(req, resp);
+            }
+
+        } 
+        catch (Exception e) 
+        {
             req.setAttribute("falhaAutenticacao", true);
-            sc.getRequestDispatcher("/dynamic/jsp/login.jsp").forward(req, resp);
+            resp.sendRedirect("/Urna");
         }
     }
 }
